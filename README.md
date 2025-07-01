@@ -1,77 +1,215 @@
-# TechStax Assessment - Action Repository
+# 🎯 GitHub Action Repository - TechStax Assessment
 
-This repository is designed to trigger GitHub webhook events for the TechStax assessment. It serves as the source repository that will send webhook notifications to our webhook receiver application.
+![GitHub](https://img.shields.io/badge/GitHub-Webhooks-blue.svg)
+![Events](https://img.shields.io/badge/Events-Push%20|%20PR%20|%20Merge-green.svg)
+![Status](https://img.shields.io/badge/Status-Active-success.svg)
+
+This repository serves as the **event source** for the TechStax technical assessment. It's designed to trigger GitHub webhook events that are captured by our webhook receiver application, demonstrating real-time GitHub integration capabilities.
+
+## 🏗️ Architecture Role
+
+```
+This Repository (action-repo)
+       ↓ Triggers webhook events
+GitHub Webhooks API
+       ↓ Sends events to
+Webhook Receiver Application
+       ↓ Displays events in
+Real-time Dashboard
+```
 
 ## 🎯 Purpose
 
-This repository is part of a GitHub webhook integration assessment. When you perform actions like:
+This repository is specifically designed to generate **three types of GitHub webhook events**:
 
-- **Push commits** to this repository
-- **Create pull requests** 
-- **Merge pull requests**
+### 🟢 Push Events
+Triggered when code is pushed to any branch
+- **Action**: `git push`
+- **Result**: Webhook event sent to receiver
+- **Display**: Author, branch, timestamp
 
-These actions will automatically trigger webhook events that are captured by our webhook receiver application.
+### 🔵 Pull Request Events  
+Triggered when pull requests are created
+- **Action**: Create PR via GitHub interface
+- **Result**: Webhook event sent to receiver
+- **Display**: Author, source→target branches, timestamp
 
-## 🚀 How to Test
+### 🟣 Merge Events (Bonus!)
+Triggered when pull requests are merged
+- **Action**: Merge PR via GitHub interface  
+- **Result**: Webhook event sent to receiver
+- **Display**: Merger, merged branches, timestamp
 
-### 1. Setup Webhook
-Make sure you have configured a webhook in this repository's settings pointing to your webhook receiver endpoint.
+## ⚙️ Webhook Configuration
 
-### 2. Test Push Events
+To connect this repository to your webhook receiver:
+
+### 1️⃣ Setup Webhook
+1. Go to **Settings** → **Webhooks** → **Add webhook**
+2. Configure as follows:
+   ```
+   Payload URL: https://your-ngrok-url.ngrok.io/webhook
+   Content type: application/json
+   Secret: (optional, match your receiver config)
+   Events: ☑️ Push  ☑️ Pull requests
+   Active: ☑️
+   ```
+
+### 2️⃣ Verify Configuration
+- ✅ Webhook is **Active**
+- ✅ Events include **Push** and **Pull requests**
+- ✅ Payload URL points to your webhook receiver
+- ✅ Content type is **application/json**
+
+## 🧪 Testing Guide
+
+### 🟢 Test Push Events
+
 ```bash
 # Clone this repository
 git clone https://github.com/sharmaasahill/action-repo.git
 cd action-repo
 
 # Make a simple change
-echo "Test change $(date)" >> test-file.txt
+echo "Test change at $(date)" >> test-file.txt
 
 # Commit and push
 git add .
-git commit -m "Test push event for webhook"
+git commit -m "Test: Trigger push webhook event"
 git push origin main
 ```
 
-### 3. Test Pull Request Events
+**Expected Result**: Push event appears in webhook receiver dashboard
+
+### 🔵 Test Pull Request Events
+
 ```bash
-# Create a new branch
-git checkout -b feature/test-pr
+# Create a feature branch
+git checkout -b feature/webhook-test-$(date +%s)
 
 # Make changes
-echo "Feature branch change $(date)" >> feature.txt
+echo "Feature: Webhook testing at $(date)" >> feature.txt
 git add .
-git commit -m "Add feature for PR test"
+git commit -m "Add: Feature for PR webhook testing"
 
-# Push branch
-git push origin feature/test-pr
-
-# Then create a Pull Request on GitHub from feature/test-pr to main
+# Push feature branch
+git push origin feature/webhook-test-$(date +%s)
 ```
 
-### 4. Test Merge Events (Brownie Points!)
-- After creating the pull request above, merge it through GitHub interface
-- This will trigger a merge webhook event
+**Then on GitHub**:
+1. Navigate to this repository
+2. Click **"Compare & pull request"** button
+3. Add title: `Test: PR webhook event`
+4. Click **"Create pull request"**
 
-## 📊 Expected Webhook Events
+**Expected Result**: Pull request event appears in webhook receiver dashboard
 
-When you perform these actions, the webhook receiver should capture:
+### 🟣 Test Merge Events (Bonus Points!)
 
-1. **Push Event**: Shows commit author, target branch, and timestamp
-2. **Pull Request Event**: Shows PR author, source/target branches, and timestamp  
-3. **Merge Event**: Shows merger, source/target branches, and timestamp
+**After creating the pull request above**:
+1. Click **"Merge pull request"** button
+2. Confirm merge by clicking **"Confirm merge"**
+3. Optionally delete the feature branch
 
-## 🔍 Monitoring
-
-You can monitor these events in real-time by visiting your webhook receiver application's web interface, which refreshes every 15 seconds.
+**Expected Result**: Merge event appears in webhook receiver dashboard
 
 ## 📁 Repository Contents
 
-- `README.md` - This file explaining the repository purpose
-- `test-file.txt` - A simple file for testing push events
-- `feature.txt` - A file for testing feature branch workflows
-- `sample-code.py` - Sample Python code for demonstration
-- `.github/` - GitHub workflows (if needed)
+| File | Purpose | Usage |
+|------|---------|--------|
+| `README.md` | Documentation | You're reading it! |
+| `test-file.txt` | Push testing | Modify for push events |
+| `feature.txt` | PR/Merge testing | Use in feature branches |
+| `sample-code.py` | Demo content | Example code for commits |
+
+## 📊 Event Monitoring
+
+All webhook events generated by this repository can be monitored in real-time:
+
+### 🔗 Webhook Receiver Dashboard
+- **URL**: `http://localhost:5000` (when receiver is running)
+- **Updates**: Every 15 seconds automatically
+- **Display**: All events with timestamps and details
+
+### 🔍 Expected Event Formats
+- **Push**: `{author} pushed to {branch} on {timestamp}`
+- **Pull Request**: `{author} submitted a pull request from {from_branch} to {to_branch} on {timestamp}`
+- **Merge**: `{author} merged branch {from_branch} to {to_branch} on {timestamp}`
+
+## ✅ Testing Checklist
+
+Use this checklist to verify all webhook events are working:
+
+- [ ] **Webhook configured** in repository settings
+- [ ] **Receiver application** running at webhook URL
+- [ ] **Push event** - Make commit and push
+- [ ] **Pull request event** - Create PR from feature branch  
+- [ ] **Merge event** - Merge the PR (bonus points!)
+- [ ] **Real-time display** - Events appear in dashboard
+- [ ] **Correct formatting** - Events match expected format
+
+## 🔗 Related Repositories
+
+This repository works in conjunction with:
+
+- **🚀 [webhook-repo](https://github.com/sharmaasahill/webhook-repo)** - Main webhook receiver application
+- **📋 Main Project** - Complete TechStax assessment documentation
+
+## 🛠️ Quick Commands
+
+### Rapid Testing Sequence
+```bash
+# Quick push test
+echo "Quick test $(date)" >> test-file.txt && git add . && git commit -m "Quick webhook test" && git push
+
+# Quick feature branch
+git checkout -b quick-test-$(date +%s) && echo "Feature $(date)" >> feature.txt && git add . && git commit -m "Quick PR test" && git push origin quick-test-$(date +%s)
+```
+
+### Cleanup Commands
+```bash
+# Return to main branch
+git checkout main
+
+# Delete test branches (optional)
+git branch -d feature/test-branch-name
+
+# Remove test content (optional)
+git checkout HEAD~1 -- test-file.txt
+```
+
+## 🏆 Assessment Integration
+
+This repository is an integral part of the TechStax technical assessment, specifically designed to:
+
+### ✨ Demonstrate Skills
+- **GitHub API Integration** - Webhook event generation
+- **Git Workflow Management** - Branch strategies and merging
+- **Real-time System Testing** - Event-driven architecture validation
+- **Documentation Quality** - Clear testing procedures
+
+### 🎯 Success Criteria
+- ✅ **All Event Types Generated** - Push, PR, Merge
+- ✅ **Real-time Event Capture** - Immediate webhook delivery
+- ✅ **Proper Event Formatting** - Specification compliance
+- ✅ **Professional Testing** - Systematic validation approach
+
+## 📞 Usage Instructions
+
+1. **🔧 Setup**: Configure webhook pointing to receiver application
+2. **🧪 Test**: Follow testing guide for each event type
+3. **🔍 Monitor**: Watch events appear in real-time dashboard  
+4. **✅ Verify**: Confirm all event types work correctly
 
 ---
 
-**Note**: This repository is created specifically for the TechStax technical assessment to demonstrate GitHub webhook integration capabilities. 
+<div align="center">
+
+**🎯 GitHub Event Source for TechStax Assessment 🎯**
+
+*Generating webhook events to demonstrate real-time GitHub integration*
+
+![GitHub](https://img.shields.io/badge/GitHub-Events-blue.svg)
+![Webhooks](https://img.shields.io/badge/Webhooks-Ready-green.svg)
+
+</div> 
