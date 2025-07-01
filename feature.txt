@@ -1,0 +1,23 @@
+TechStax Assessment - Feature Development File
+===========================================
+
+This file is used for testing Pull Request and Merge webhook events.
+
+Feature Development Log:
+-----------------------
+
+Initial feature file created for webhook testing.
+
+Features to be added:
+- [ ] User authentication feature
+- [ ] Real-time notifications
+- [ ] Data export functionality
+- [ ] Advanced search filters
+- [ ] Mobile responsive design
+
+When you create feature branches and modify this file, 
+it will trigger Pull Request events when opening PRs,
+and Merge events when merging PRs (brownie points!).
+
+---
+Last updated: 2025-01-02 
