@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 TechStax Assessment - Sample Code
 This file demonstrates webhook functionality when modified.
