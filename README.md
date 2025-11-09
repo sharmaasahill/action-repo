@@ -4,19 +4,11 @@
 ![Events](https://img.shields.io/badge/Events-Push%20|%20PR%20|%20Merge-green.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
 
-This repository serves as the **event source** for the webhook receiver application. It's designed to trigger GitHub webhook events that are captured by our webhook receiver application, demonstrating real-time GitHub integration capabilities.
+This repository serves as the **event source** for the webhook receiver application. It's designed to trigger GitHub webhook events that are captured by the webhook receiver, demonstrating real-time GitHub integration capabilities.
 
-## Architecture Role
+## Overview
 
-```
-This Repository (action-repo)
-       ↓ Triggers webhook events
-GitHub Webhooks API
-       ↓ Sends events to
-Webhook Receiver Application
-       ↓ Displays events in
-Real-time Dashboard
-```
+This repository is used to generate GitHub webhook events (push, pull request, merge) that are sent to the webhook receiver application. It contains sample files that can be modified to trigger webhook events for testing and demonstration purposes.
 
 ## Purpose
 
@@ -39,6 +31,18 @@ Triggered when pull requests are merged
 - **Action**: Merge PR via GitHub interface  
 - **Result**: Webhook event sent to receiver
 - **Display**: Merger, merged branches, timestamp
+
+## Architecture Role
+
+```
+This Repository (action-repo)
+       ↓ Triggers webhook events
+GitHub Webhooks API
+       ↓ Sends events to
+Webhook Receiver Application
+       ↓ Displays events in
+Real-time Dashboard
+```
 
 ## Webhook Configuration
 
@@ -148,13 +152,6 @@ Use this checklist to verify all webhook events are working:
 - [ ] **Real-time display** - Events appear in dashboard
 - [ ] **Correct formatting** - Events match expected format
 
-## Related Repositories
-
-This repository works in conjunction with:
-
-- **[webhook-repo](https://github.com/sharmaasahill/webhook-repo)** - Main webhook receiver application
-- **Main Project** - Complete project documentation
-
 ## Quick Commands
 
 ### Rapid Testing Sequence
@@ -178,21 +175,22 @@ git branch -d feature/test-branch-name
 git checkout HEAD~1 -- test-file.txt
 ```
 
-## Integration
+## Files Description
 
-This repository is designed to:
+### test-file.txt
+Simple text file used for testing push events. Modify this file and push changes to trigger push webhook events.
 
-### Demonstrate Skills
-- **GitHub API Integration** - Webhook event generation
-- **Git Workflow Management** - Branch strategies and merging
-- **Real-time System Testing** - Event-driven architecture validation
-- **Documentation Quality** - Clear testing procedures
+### feature.txt
+Feature development file used for testing pull request and merge events. Create feature branches and modify this file to test PR and merge workflows.
 
-### Success Criteria
-- **All Event Types Generated** - Push, PR, Merge
-- **Real-time Event Capture** - Immediate webhook delivery
-- **Proper Event Formatting** - Specification compliance
-- **Professional Testing** - Systematic validation approach
+### sample-code.py
+Sample Python code file that can be modified to trigger webhook events. Useful for demonstrating code changes in commits and pull requests.
+
+## Related Repositories
+
+This repository works in conjunction with:
+
+- **[webhook-repo](https://github.com/sharmaasahill/webhook-repo)** - Main webhook receiver application
 
 ## Usage Instructions
 
@@ -201,9 +199,10 @@ This repository is designed to:
 3. **Monitor**: Watch events appear in real-time dashboard  
 4. **Verify**: Confirm all event types work correctly
 
+
 ---
 
-<div align="center">
+<div align="left">
 
 **GitHub Event Source**
 
