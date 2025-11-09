@@ -1,4 +1,4 @@
-TechStax Assessment - Test File
+GitHub Webhook Test File
 =============================
 
 This file is used for testing push webhook events.

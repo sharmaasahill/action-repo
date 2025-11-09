@@ -1,5 +1,5 @@
 """
-TechStax Assessment - Sample Code
+GitHub Webhook Sample Code
 This file demonstrates webhook functionality when modified.
 """
 
@@ -7,14 +7,14 @@ def greet_user(name):
     """
     A simple greeting function for demonstration
     """
-    return f"Hello, {name}! Welcome to TechStax Assessment."
+    return f"Hello, {name}! Welcome to GitHub Webhook Receiver."
 
 def main():
     """
     Main function to demonstrate the application
     """
     print("=" * 50)
-    print("TechStax Assessment - GitHub Webhook Demo")
+    print("GitHub Webhook Demo")
     print("=" * 50)
     
     # Sample user greeting

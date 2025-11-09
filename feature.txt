@@ -1,4 +1,4 @@
-TechStax Assessment - Feature Development File
+GitHub Webhook Feature Development File
 ===========================================
 
 This file is used for testing Pull Request and Merge webhook events.
